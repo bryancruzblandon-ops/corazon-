@@ -90,8 +90,21 @@
 
     /* ESTILOS VISUALES */
     /* 1. Clásico */
-    .style-classic .heart-main { fill: #ff2a5f; stroke: #c9184a; stroke-width: 2; }
-    .style-classic .heart-sub { fill: #ff7597; }
+    .style-classic .heart-main {
+  fill: #ff2a5f;
+  stroke: #2b0914; /* Borde oscuro estilo tinta/cómic */
+  stroke-width: 4; /* Borde más grueso */
+  stroke-linecap: round; /* Puntas de trazo redondeadas */
+  stroke-linejoin: round; /* Esquinas de trazo suaves */
+}
+
+.style-classic .heart-sub {
+  fill: #ff7597;
+  stroke: #2b0914; /* Mantiene la coherencia del estilo de dibujo */
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
 
     /* 2. Líneas */
     .style-lines .heart-main, .style-lines .heart-sub {
