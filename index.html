@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Muchos Corazones para Ti ❤️</title>
+  <style>
+    :root {
+      --bg: #0d0914;
+      --heart-main: #ff2a5f;
+      --heart-light: #ff7597;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      color: #fff;
+      padding: 20px 10px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    h1 {
+      font-size: 1.6rem;
+      text-align: center;
+      color: #ffb3c6;
+      text-shadow: 0 0 10px rgba(255, 42, 95, 0.5);
+      margin-bottom: 15px;
+      z-index: 10;
+    }
+
+    /* Selector de Estilos */
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      max-width: 400px;
+      margin-bottom: 15px;
+      z-index: 10;
+    }
+
+    .btn {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 117, 151, 0.4);
+      color: #ffb3c6;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(4px);
+    }
+
+    .btn:hover, .btn.active {
+      background: #ff2a5f;
+      color: #fff;
+      font-weight: bold;
+      box-shadow: 0 0 12px #ff2a5f;
+    }
+
+    /* Contenedor SVG */
+    .svg-container {
+      width: 100%;
+      max-width: 360px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 5;
+      filter: drop-shadow(0 10px 15px rgba(0,0,0,0.5));
+    }
+
+    svg {
+      width: 100%;
+      height: auto;
+      max-height: 55vh;
+      transition: all 0.5s ease;
+    }
+
+    /* ESTILOS VISUALES */
+    /* 1. Clásico */
+    .style-classic .heart-main { fill: #ff2a5f; stroke: #c9184a; stroke-width: 2; }
+    .style-classic .heart-sub { fill: #ff7597; }
+
+    /* 2. Líneas */
+    .style-lines .heart-main, .style-lines .heart-sub {
+      fill: none !important;
+      stroke: #ff7597 !important;
+      stroke-width: 3 !important;
+      filter: drop-shadow(0 0 4px #ff2a5f);
+    }
+
+    /* 3. Puntos */
+    .style-dots .heart-main { fill: url(#dot-heart) !important; stroke: none; }
+    .style-dots .heart-sub { fill: url(#dot-heart-sub) !important; stroke: none; }
+
+    /* 4. Mandala */
+    .style-mandala .heart-main { fill: #ff4d6d; stroke: #fff; stroke-width: 1.5; stroke-dasharray: 3 2; }
+    .style-mandala .heart-sub { fill: #ff8fa3; stroke: #fff; stroke-width: 1; }
+
+    /* 5. Patrones */
+    .style-patterns .heart-main { fill: url(#stripe-heart) !important; stroke: #ff2a5f; }
+    .style-patterns .heart-sub { fill: url(#stripe-heart-sub) !important; stroke: #ff7597; }
+
+    /* 6. Neón */
+    .style-neon .heart-main { fill: none; stroke: #ff2a5f; stroke-width: 4; filter: drop-shadow(0 0 10px #ff2a5f); }
+    .style-neon .heart-sub { fill: none; stroke: #70e000; stroke-width: 3; filter: drop-shadow(0 0 8px #70e000); }
+
+    /* Corazones flotantes de fondo */
+    .floating-heart {
+      position: absolute;
+      color: #ff4d6d;
+      pointer-events: none;
+      z-index: 1;
+      animation: floatUp 4s linear infinite;
+      opacity: 0.7;
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(100vh) scale(0.5); opacity: 0; }
+      20% { opacity: 0.8; }
+      100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
+    }
+
+    /* Partículas al tocar */
+    .sparkle {
+      position: absolute;
+      pointer-events: none;
+      background: #ff7597;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #ff2a5f;
+      animation: fade-out 1.2s forwards ease-out;
+      z-index: 20;
+    }
+
+    @keyframes fade-out {
+      0% { opacity: 1; transform: scale(1); }
+      100% { opacity: 0; transform: scale(0.1) translateY(-15px); }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Muchos corazones para ti ❤️</h1>
+
+  <div class="controls">
+    <button class="btn active" onclick="setStyle('classic', event)">Clásico</button>
+    <button class="btn" onclick="setStyle('lines', event)">Líneas</button>
+    <button class="btn" onclick="setStyle('dots', event)">Puntos</button>
+    <button class="btn" onclick="setStyle('mandala', event)">Mandala</button>
+    <button class="btn" onclick="setStyle('patterns', event)">Patrones</button>
+    <button class="btn" onclick="setStyle('neon', event)">Neón</button>
+  </div>
+
+  <div class="svg-container">
+    <svg id="heart-svg" class="style-classic" viewBox="0 0 300 350" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <pattern id="dot-heart" width="8" height="8" patternUnits="userSpaceOnUse">
+          <circle cx="4" cy="4" r="2.5" fill="#ff2a5f" />
+        </pattern>
+        <pattern id="dot-heart-sub" width="8" height="8" patternUnits="userSpaceOnUse">
+          <circle cx="4" cy="4" r="2.5" fill="#ff7597" />
+        </pattern>
+        <pattern id="stripe-heart" width="10" height="10" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+          <line x1="0" y1="0" x2="0" y2="10" stroke="#ff2a5f" stroke-width="5" />
+          <line x1="5" y1="0" x2="5" y2="10" stroke="#a71e34" stroke-width="5" />
+        </pattern>
+        <pattern id="stripe-heart-sub" width="10" height="10" patternTransform="rotate(-45)" patternUnits="userSpaceOnUse">
+          <line x1="0" y1="0" x2="0" y2="10" stroke="#ff7597" stroke-width="5" />
+          <line x1="5" y1="0" x2="5" y2="10" stroke="#ffb3c6" stroke-width="5" />
+        </pattern>
+      </defs>
+
+      <!-- Composición de Corazones -->
+      <!-- Corazón Central Grande -->
+      <path class="heart-main" d="M 150,260 C 150,260 70,180 70,115 C 70,75 100,50 130,50 C 145,50 150,65 150,65 C 150,65 155,50 170,50 C 200,50 230,75 230,115 C 230,180 150,260 150,260 Z" />
+
+      <!-- Corazones Pequeños Alrededor -->
+      <path class="heart-sub" transform="translate(40, 40) scale(0.35)" d="M 150,260 C 150,260 70,180 70,115 C 70,75 100,50 130,50 C 145,50 150,65 150,65 C 150,65 155,50 170,50 C 200,50 230,75 230,115 C 230,180 150,260 150,260 Z" />
+      <path class="heart-sub" transform="translate(160, 30) scale(0.3)" d="M 150,260 C 150,260 70,180 70,115 C 70,75 100,50 130,50 C 145,50 150,65 150,65 C 150,65 155,50 170,50 C 200,50 230,75 230,115 C 230,180 150,260 150,260 Z" />
+      <path class="heart-sub" transform="translate(-10, 140) scale(0.28)" d="M 150,260 C 150,260 70,180 70,115 C 70,75 100,50 130,50 C 145,50 150,65 150,65 C 150,65 155,50 170,50 C 200,50 230,75 230,115 C 230,180 150,260 150,260 Z" />
+      <path class="heart-sub" transform="translate(200, 150) scale(0.32)" d="M 150,260 C 150,260 70,180 70,115 C 70,75 100,50 130,50 C 145,50 150,65 150,65 C 150,65 155,50 170,50 C 200,50 230,75 230,115 C 230,180 150,260 150,260 Z" />
+      <path class="heart-sub" transform="translate(100, 230) scale(0.25)" d="M 150,260 C 150,260 70,180 70,115 C 70,75 100,50 130,50 C 145,50 150,65 150,65 C 150,65 155,50 170,50 C 200,50 230,75 230,115 C 230,180 150,260 150,260 Z" />
+    </svg>
+  </div>
+
+  <script>
+    function setStyle(styleName, ev) {
+      const svg = document.getElementById('heart-svg');
+      const buttons = document.querySelectorAll('.btn');
+      
+      svg.className.baseVal = 'style-' + styleName;
+      
+      buttons.forEach(b => b.classList.remove('active'));
+      if (ev && ev.target) {
+        ev.target.classList.add('active');
+      }
+    }
+
+    /* Generar corazones flotantes de fondo */
+    function createFloatingHeart() {
+      const heart = document.createElement('div');
+      heart.classList.add('floating-heart');
+      heart.innerHTML = '❤️';
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.animationDuration = (Math.random() * 3 + 3) + 's';
+      heart.style.fontSize = (Math.random() * 15 + 10) + 'px';
+
+      document.body.appendChild(heart);
+
+      setTimeout(() => {
+        heart.remove();
+      }, 5000);
+    }
+
+    setInterval(createFloatingHeart, 400);
+
+    /* Partículas al mover o tocar */
+    document.addEventListener('mousemove', createSparkle);
+    document.addEventListener('touchmove', (e) => {
+      createSparkle(e.touches[0]);
+    });
+
+    function createSparkle(e) {
+      const sparkle = document.createElement('div');
+      sparkle.classList.add('sparkle');
+      
+      const size = Math.random() * 6 + 4;
+      sparkle.style.width = `${size}px`;
+      sparkle.style.height = `${size}px`;
+      
+      sparkle.style.left = `${e.clientX}px`;
+      sparkle.style.top = `${e.clientY}px`;
+
+      document.body.appendChild(sparkle);
+
+      setTimeout(() => {
+        sparkle.remove();
+      }, 1200);
+    }
+  </script>
+</body>
+</html>
